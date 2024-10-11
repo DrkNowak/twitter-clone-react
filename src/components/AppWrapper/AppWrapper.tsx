@@ -1,4 +1,7 @@
 import { Fragment } from "react";
+
+import Box from '@mui/material/Box';
+
 import Header from '../Header/Header';
 import PostHistory from '../PostHistory/PostHistory';
 import LoginScreen from '../LoginScreen/LoginScreen';
@@ -11,10 +14,12 @@ import { RootState } from '../../store';
 import { getTweets } from '../../api'; 
 import { Tweet } from "../../types/types";
 
+import  AppStyles from './AppStyles';
+
 
 function AppWrapper() {
+  const styles = AppStyles;
 
-    
   const user = useSelector((state: RootState) => {
       return state.user.user;
     });
@@ -29,20 +34,21 @@ function AppWrapper() {
   
       fetchTweets();
     }, [user]);
-
+    console.log(styles)
 
     return (
       <Fragment>
         {user.id && <Header user={user} />}
-        <div className="App" style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
-        {!user.id && <LoginScreen />}
-          {user.id && <PostAddition newTweetId={String(tweets.length + 1)} user={ user } />}
-        { user.id && <PostHistory tweets={tweets}/> }
-    </div>
+        <Box className="App" sx={styles.appWrapper}>
+          {!user.id ?
+            <LoginScreen />
+            :
+            <Fragment>
+              <PostAddition newTweetId={String(tweets.length + 1)} user={ user } />
+              <PostHistory tweets={tweets} />
+            </Fragment>
+          }
+    </Box>
     </Fragment>
     );
   }
