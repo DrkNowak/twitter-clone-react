@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { validationRules } from './helpers';
+import { getValidationErrorMessage } from './helpers';
 import { register, getUser } from '../../api'; 
 
 import Box from '@mui/material/Box';
@@ -61,7 +61,7 @@ function LoginScreen(){
     };
  
     function handleValidation(value: string = '', field: string = '') {
-         setValidation({...validation, [field]: validationRules[field as keyof ValidationRulesTypes](value)});
+         setValidation({...validation, [field]: getValidationErrorMessage[field as keyof ValidationRulesTypes](value)});
     };
     
     function getIsDisabled(user: User): boolean { 
