@@ -34,7 +34,6 @@ function AppWrapper() {
   
       fetchTweets();
     }, [user]);
-    console.log(styles)
 
     return (
       <Fragment>

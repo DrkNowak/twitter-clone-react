@@ -2,8 +2,6 @@ import { Fragment, useState } from 'react';
 import { getValidationErrorMessage } from './helpers';
 import { register, getUser } from '../../api'; 
 
-import { Field } from './fieldsConfig';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
