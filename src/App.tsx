@@ -1,7 +1,7 @@
 import { store } from './store';
 import { Provider } from 'react-redux';
 
-import AppWrapper from './components/AppWrapper/AppWrapper';
+import AppWrapper from './pages/AppWrapper/AppWrapper';
 
 function App() {
   return (

@@ -1,11 +1,12 @@
-import { Fragment } from "react";
+import { Fragment, ReactNode } from "react";
+
 
 import Box from '@mui/material/Box';
 
-import Header from '../Header/Header';
-import PostHistory from '../PostHistory/PostHistory';
+import Header from '../../components/Header/Header';
+import PostHistory from '../../components/PostHistory/PostHistory';
 import LoginScreen from '../LoginScreen/LoginScreen';
-import PostAddition from "../PostAddition/PostAddition";
+import PostAddition from "../../components/PostAddition/PostAddition";
 
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -14,8 +15,25 @@ import { RootState } from '../../store';
 import { getTweets } from '../../api'; 
 import { Tweet } from "../../types/types";
 
-import  AppStyles from './AppStyles';
+import AppStyles from './AppStyles';
 
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+// const LoginScreen: ReactNode = LoginScreen();
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <><LoginScreen/></>,
+  },
+  {
+    path: "/dashboard",
+    element: <><LoginScreen/></>,
+  },
+]);
 
 function AppWrapper() {
   const styles = AppStyles;
@@ -35,10 +53,13 @@ function AppWrapper() {
       fetchTweets();
     }, [user]);
 
-    return (
-      <Fragment>
-        {user.id && <Header user={user} />}
-        <Box className="App" sx={styles.appWrapper}>
+  return (
+    <Fragment>
+      <Box className="App" sx={styles.appWrapper}>
+        <RouterProvider router={router} />
+      </Box>
+        {/* {user.id && <Header user={user} />}
+        
           {!user.id ?
             <LoginScreen />
             :
@@ -47,7 +68,7 @@ function AppWrapper() {
               <PostHistory tweets={tweets} />
             </Fragment>
           }
-    </Box>
+     */}
     </Fragment>
     );
   }
