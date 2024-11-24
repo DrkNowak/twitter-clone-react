@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import GlobalStyles from '../../ui-kit/GlobalStyles';
-import { User, Tweet } from '../../types/types';
-import { postTweet } from '../../api/index';
+import GlobalStyles from '../../../ui-kit/GlobalStyles';
+import { User, Tweet } from '../../../types/types';
+import { postTweet } from '../../../api/index';
 import { useState } from 'react';
 
 

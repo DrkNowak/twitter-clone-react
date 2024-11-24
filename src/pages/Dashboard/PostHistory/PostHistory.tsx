@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
-import UserAvatar from '../UserAvatar/UserAvatar';
-import GlobalStyles from '../../ui-kit/GlobalStyles';
+import UserAvatar from '../../../components/UserAvatar/UserAvatar';
+import GlobalStyles from '../../../ui-kit/GlobalStyles';
 import PostHistoryStyles from './PostHistoryStyles';
-import { Tweet } from "../../types/types";
+import { Tweet } from "../../../types/types";
 import { memo } from 'react';
 
 function PostHistory({tweets}: {tweets: Tweet[]}){

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import {  } from './helpers';
-import { getUser } from '../../api'; 
+import { useNavigate } from 'react-router';
+import { getValidationErrorMessage } from './helpers';
+import { register, getUser } from '../../api'; 
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,8 +11,7 @@ import { useDispatch } from 'react-redux';
 import { setStoreUser } from '../../store/user'; 
 
 import GlobalStyles from '../../ui-kit/GlobalStyles';
-import { User } from '../../types/types';
-import { useNavigate } from 'react-router';
+import { User, ValidationRulesTypes } from '../../types/types';
 
 
 
@@ -20,15 +20,27 @@ function LoginScreen(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [user, setUser] = useState<User>({id: '', password: ''});
+    const [isLogin, setIsLogin] = useState(true);
+    const [user, setUser] = useState<User>({id: '', name: '', email: '', password: ''});
+    const [validation, setValidation] = useState({ id: '', name: '', email:  '', password: ''});
+
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>, field : string): void {
         const value = (e.target as HTMLInputElement).value;
+        
+        if(!isLogin){
+            handleValidation(value, field);
+        }
 
         setUser({ ...user, [field]: value });
      }
  
     async function handleClick() {  
+        if (!isLogin) {
+            Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User], field));
+            
+            await register(user);
+        } else { 
             let response: { data?: User } = {};
 
             try {
@@ -39,33 +51,56 @@ function LoginScreen(){
                 if (response.data?.password) {
                     if (response.data?.password === user.password) { 
                         dispatch(setStoreUser({ ...response.data }));
+                        toggleLogin();
                     }
                 }
             }
+        }
      }
+ 
+    function toggleLogin(): void {
+        navigate('/logIn');
+    };
+ 
+    function handleValidation(value: string = '', field: string = '') {
+         setValidation({...validation, [field]: getValidationErrorMessage[field as keyof ValidationRulesTypes](value)});
+    };
     
     function getIsDisabled(user: User): boolean { 
+        if (isLogin) { 
+            return !(user.id && user.password);
+        }
+
         return !Object.values(user).every(Boolean);
-    }  
-    
-    function toggleLogin() {
-        navigate('/signUp');
-    }
+    }   
 
     return (
        <Box>
-            <Box  sx={{...styles.borderBox, display: 'flex', flexDirection: 'column', justifyContent:'space-between', height:'200px', padding: '20px 50px'}}>
-                <h2>Log In</h2>
+            <Box  sx={{...styles.borderBox, display: 'flex', flexDirection: 'column', justifyContent:'space-between', height: '300px', padding: '20px 50px'}}>
+                <h2>Sign up</h2>
                 <TextField 
                     size="small" 
                     placeholder='Username' 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'id')}
                 />
                 <TextField 
+                    error={!!validation.password} 
+                    helperText={validation.password} 
                     size="small" 
                     placeholder='Password' 
                     type="password" 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')}/>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')} />
+                <TextField 
+                    error={!!validation.email} 
+                    helperText={validation.email} 
+                    size="small" placeholder='Email' 
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'email')}
+                />
+                <TextField 
+                    size="small" 
+                    placeholder='Full name' 
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'name')}
+                /> 
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button 
                         disabled={ getIsDisabled(user) }
@@ -77,12 +112,13 @@ function LoginScreen(){
                             backgroundColor: 'gray',
                             color: 'black'
                         }}>
-                           Log in
+                            Sign Up
                     </Button>
                 </Box>
+
             </Box>
             <Box sx={{display:'flex', justifyContent:'flex-end'}}>
-                <p>Don't have an account? <a onClick={toggleLogin}>Sign up</a></p>
+               <p>Already have an account? <a onClick={toggleLogin}>Sign Up</a></p>
             </Box>
         </Box>
     );

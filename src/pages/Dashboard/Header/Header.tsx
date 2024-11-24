@@ -1,5 +1,5 @@
-import { User } from '../../types/types';
-import UserAvatar from '../UserAvatar/UserAvatar';
+import { User } from '../../../types/types';
+import UserAvatar from '../../../components/UserAvatar/UserAvatar';
 import HeaderStyles from './HeaderStyles';
 import Box from '@mui/material/Box';
 import { memo } from 'react';
@@ -20,3 +20,6 @@ const HeaderMemo = memo(function Header({ user }: { user: User }) {
 
 
 export default HeaderMemo;
+
+
+

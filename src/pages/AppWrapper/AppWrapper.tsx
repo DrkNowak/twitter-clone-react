@@ -1,12 +1,15 @@
 import { Fragment, ReactNode } from "react";
 
 
+
 import Box from '@mui/material/Box';
 
-import Header from '../../components/Header/Header';
-import PostHistory from '../../components/PostHistory/PostHistory';
+import Header from '../Dashboard/Header/Header';
+import PostHistory from '../Dashboard/PostHistory/PostHistory';
 import LoginScreen from '../LoginScreen/LoginScreen';
-import PostAddition from "../../components/PostAddition/PostAddition";
+import SignUpScreen from '../LoginScreen/SignUpScreen';
+import Dashboard from "../Dashboard/Dashboard";
+import PostAddition from "../Dashboard/PostAddition/PostAddition";
 
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -24,16 +27,7 @@ import {
 
 // const LoginScreen: ReactNode = LoginScreen();
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <><LoginScreen/></>,
-  },
-  {
-    path: "/dashboard",
-    element: <><LoginScreen/></>,
-  },
-]);
+
 
 function AppWrapper() {
   const styles = AppStyles;
@@ -52,6 +46,21 @@ function AppWrapper() {
   
       fetchTweets();
     }, [user]);
+  
+    const router = createBrowserRouter([
+      {
+        path: "/",
+        element: user.id ? <><Dashboard/></> : <><LoginScreen/></>,
+      },
+      {
+        path: "/logIn",
+        element: <><LoginScreen/></>,
+      },
+      {
+        path: "/signUp",
+        element: <><SignUpScreen/></>,
+      },
+    ]);
 
   return (
     <Fragment>
