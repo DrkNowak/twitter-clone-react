@@ -13,64 +13,38 @@ import { setStoreUser } from '../../store/user';
 import GlobalStyles from '../../ui-kit/GlobalStyles';
 import { User, ValidationRulesTypes } from '../../types/types';
 
+import { useValidation } from './fieldsConfig';
+
 
 
 function LoginScreen(){
     const styles = GlobalStyles;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { validation, handleValidation } = useValidation();
 
-    const [isLogin, setIsLogin] = useState(true);
     const [user, setUser] = useState<User>({id: '', name: '', email: '', password: ''});
-    const [validation, setValidation] = useState({ id: '', name: '', email:  '', password: ''});
 
-
+    
     function handleChange(e: React.ChangeEvent<HTMLInputElement>, field : string): void {
         const value = (e.target as HTMLInputElement).value;
         
-        if(!isLogin){
-            handleValidation(value, field);
-        }
+        handleValidation(value, field);
 
         setUser({ ...user, [field]: value });
      }
  
     async function handleClick() {  
-        if (!isLogin) {
-            Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User], field));
-            
-            await register(user);
-        } else { 
-            let response: { data?: User } = {};
-
-            try {
-                response = await getUser(user.id) as { data?: User };
-            } catch (e) {
-                console.error('invalid user credentials', e);
-            } finally { 
-                if (response.data?.password) {
-                    if (response.data?.password === user.password) { 
-                        dispatch(setStoreUser({ ...response.data }));
-                        toggleLogin();
-                    }
-                }
-            }
-        }
+        Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User], field));
+        
+        await register(user);
      }
  
     function toggleLogin(): void {
         navigate('/logIn');
     };
- 
-    function handleValidation(value: string = '', field: string = '') {
-         setValidation({...validation, [field]: getValidationErrorMessage[field as keyof ValidationRulesTypes](value)});
-    };
     
     function getIsDisabled(user: User): boolean { 
-        if (isLogin) { 
-            return !(user.id && user.password);
-        }
-
         return !Object.values(user).every(Boolean);
     }   
 
@@ -118,7 +92,7 @@ function LoginScreen(){
 
             </Box>
             <Box sx={{display:'flex', justifyContent:'flex-end'}}>
-               <p>Already have an account? <a onClick={toggleLogin}>Sign Up</a></p>
+               <p>Already have an account? <a onClick={toggleLogin}>Sign In</a></p>
             </Box>
         </Box>
     );
