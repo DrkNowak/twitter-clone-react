@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { getValidationErrorMessage } from './helpers';
 import { register, getUser } from '../../api'; 
 
 import Box from '@mui/material/Box';
@@ -11,9 +10,9 @@ import { useDispatch } from 'react-redux';
 import { setStoreUser } from '../../store/user'; 
 
 import GlobalStyles from '../../ui-kit/GlobalStyles';
-import { User, ValidationRulesTypes } from '../../types/types';
+import { User,  } from '../../types/types';
 
-import { useValidation } from './fieldsConfig';
+import { useValidation,  } from './fieldsConfig';
 
 
 
@@ -25,7 +24,7 @@ function LoginScreen(){
 
     const [user, setUser] = useState<User>({id: '', name: '', email: '', password: ''});
 
-    
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement>, field : string): void {
         const value = (e.target as HTMLInputElement).value;
         
@@ -67,7 +66,8 @@ function LoginScreen(){
                 <TextField 
                     error={!!validation.email} 
                     helperText={validation.email} 
-                    size="small" placeholder='Email' 
+                    size="small"
+                    placeholder='Email' 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'email')}
                 />
                 <TextField 
