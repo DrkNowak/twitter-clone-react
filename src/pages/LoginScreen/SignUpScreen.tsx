@@ -79,13 +79,7 @@ function LoginScreen(){
                     <Button 
                         disabled={ getIsDisabled(user) }
                         onClick={handleClick} 
-                        sx={{
-                            justifyContent: 'center',
-                            border: '1px solid black',
-                            width: '80px',
-                            backgroundColor: 'gray',
-                            color: 'black'
-                        }}>
+                        sx={styles.button}>
                             Sign Up
                     </Button>
                 </Box>

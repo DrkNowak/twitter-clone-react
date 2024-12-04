@@ -33,15 +33,15 @@ function Dashboard() {
       fetchTweets();
     }, [user]);
 
-    return (
+  return (
     <Box className="App" sx={styles.appWrapper}>
-       <Header user={user} />
-       <Fragment>
-           <PostAddition newTweetId={String(tweets.length + 1)} user={ user } />
-           <PostHistory tweets={tweets} />
-        </Fragment>
+      <Header user={user} />
+      <Fragment>
+        <PostAddition newTweetId={String(tweets.length + 1)} user={user} />
+        <PostHistory tweets={tweets} />
+      </Fragment>
     </Box>
-          )
+  );
      
     
 };

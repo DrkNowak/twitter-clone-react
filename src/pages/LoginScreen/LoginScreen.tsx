@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import {  } from './helpers';
 import { getUser } from '../../api'; 
 
 import Box from '@mui/material/Box';
@@ -29,20 +28,29 @@ function LoginScreen(){
      }
  
     async function handleClick() {  
-            let response: { data?: User } = {};
+        let response: { data?: User } = {};
+        
+        // todo check this out
+        // const [error, data] = await fetch("https://api.example.com/data").json()?=;
+        // https://medium.com/@pranshiksharma/say-goodbye-to-try-catch-mastering-the-new-operator-in-javascript-b4ffd589da94
+        // if (error) {
+        //   console.error('Error occurred:', error);
+        // } else {
+        //   console.log('Data fetched successfully:', data);
+        // }
 
-            try {
-                response = await getUser(user.id) as { data?: User };
-            } catch (e) {
-                console.error('invalid user credentials', e);
-            } finally { 
-                if (response.data?.password) {
-                    if (response.data?.password === user.password) { 
-                        dispatch(setStoreUser({ ...response.data }));
-                    }
-                }
+        try {
+            response = await getUser(user.id) as { data?: User };
+        } catch (e) {
+            console.error('invalid user credentials', e);
+        } finally { 
+            const BEPass = response.data?.password;
+          
+            if (BEPass && BEPass === user.password) { 
+                dispatch(setStoreUser({ ...response.data }));
             }
-     }
+        }
+    } 
     
     function getIsDisabled(user: User): boolean { 
         return !Object.values(user).every(Boolean);
@@ -70,18 +78,12 @@ function LoginScreen(){
                     <Button 
                         disabled={ getIsDisabled(user) }
                         onClick={handleClick} 
-                        sx={{
-                            justifyContent: 'center',
-                            border: '1px solid black',
-                            width: '80px',
-                            backgroundColor: 'gray',
-                            color: 'black'
-                        }}>
+                        sx={styles.button}>
                            Log in
                     </Button>
                 </Box>
             </Box>
-            <Box sx={{display:'flex', justifyContent:'flex-end'}}>
+            <Box>
                 <p>Don't have an account? <a onClick={toggleLogin}>Sign up</a></p>
             </Box>
         </Box>

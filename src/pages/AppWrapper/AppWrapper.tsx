@@ -1,52 +1,44 @@
 import { Fragment } from "react";
-
-
-
+import { useSelector } from 'react-redux';
+import Box from '@mui/material/Box';
 
 import LoginScreen from '../LoginScreen/LoginScreen';
 import SignUpScreen from '../LoginScreen/SignUpScreen';
 import Dashboard from "../Dashboard/Dashboard";
 
-
-import { useSelector } from 'react-redux';
-
 import { RootState } from '../../store';
-
-
 
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 
-// const LoginScreen: ReactNode = LoginScreen();
-
-
-
 function AppWrapper() {
   const user = useSelector((state: RootState) => {
-      return state.user.user;
+    return state.user.user;
   });
   
   const router = createBrowserRouter([
     {
       path: "/",
-      element: user.id ? <><Dashboard/></> : <><LoginScreen/></>,
+      element: user.id ? <><Dashboard /></> : <><LoginScreen /></>,
     },
     {
       path: "/logIn",
-      element: <><LoginScreen/></>,
+      element: <><LoginScreen /></>,
     },
     {
       path: "/signUp",
-      element: <><SignUpScreen/></>,
+      element: <><SignUpScreen /></>,
     },
   ]);
 
   return (
-    <Fragment>
+    <Box sx={{
+     display: 'flex', justifyContent: 'center', marginTop: '20px'
+    }}>
         <RouterProvider router={router} />
-    </Fragment>
+    </Box>
     );
   }
   
