@@ -4,6 +4,7 @@ import { getUser } from '../../api';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
 
 import { useDispatch } from 'react-redux';
 import { setStoreUser } from '../../store/user'; 
@@ -83,8 +84,8 @@ function LoginScreen(){
                     </Button>
                 </Box>
             </Box>
-            <Box>
-                <p>Don't have an account? <a onClick={toggleLogin}>Sign up</a></p>
+            <Box sx={{display:'flex', justifyContent:'center'}}>
+                <p>Don't have an account? <Link sx={{cursor: 'pointer'}} onClick={toggleLogin}>Sign up</Link></p>
             </Box>
         </Box>
     );

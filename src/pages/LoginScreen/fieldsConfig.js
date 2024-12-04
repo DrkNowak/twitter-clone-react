@@ -8,7 +8,6 @@ export function useValidation(){
         setValidation({...validation, [field]: getValidationErrorMessage[field](value)});
     };
 
-
     return {
         handleValidation,
         validation

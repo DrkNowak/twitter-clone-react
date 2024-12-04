@@ -8,7 +8,8 @@ import { useState } from 'react';
 
 
 
-function PostAddition({ newTweetId, user }: {newTweetId: string, user: User}){
+function PostAddition({ newTweetId, user }: { newTweetId: string, user: User }) {
+    const styles = GlobalStyles;
     const [ newTweet, setNewTweet] = useState<Tweet>();
 
     function handleClick() {
@@ -27,11 +28,11 @@ function PostAddition({ newTweetId, user }: {newTweetId: string, user: User}){
     }
 
     return (
-        <>
-            <TextField multiline
+        <Box sx={{display: 'flex', width: '60%', flexDirection: 'column', alignItems: 'center', marginBottom: '30px'}}>
+            <TextField multiline sx={{width: '100%', marginBottom:'10px'}}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)} />
-            <Button  onClick={handleClick}>add</Button>
-            </>
+            <Button sx={{...styles.button, alignSelf: 'end'}} onClick={handleClick}>add</Button>
+        </Box>
     );
 }
 
