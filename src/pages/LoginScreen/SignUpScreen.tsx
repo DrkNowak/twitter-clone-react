@@ -36,9 +36,28 @@ function LoginScreen(){
  
     async function handleClick() {  
         Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User], field));
-        
-        await register(user);
-     }
+        let fetchedUser;
+
+        try {
+            fetchedUser = await getUser(user.id) as { data?: User };
+        } catch (e) { console.error('err', e) }
+        finally {
+            if (fetchedUser?.data?.id) {
+                console.error('user exists');
+            } else {
+                signUp(user);
+            }
+        }
+    }
+    
+    async function signUp(user: User) { 
+        try {
+            register(user);
+        } catch (e) { console.error(e); } 
+
+        dispatch(setStoreUser({ ...user }));
+        navigate('/');
+    }
  
     function toggleLogin(): void {
         navigate('/logIn');

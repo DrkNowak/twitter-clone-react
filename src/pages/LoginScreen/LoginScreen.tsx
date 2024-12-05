@@ -44,12 +44,12 @@ function LoginScreen(){
             response = await getUser(user.id) as { data?: User };
         } catch (e) {
             console.error('invalid user credentials', e);
-        } finally { 
-            const BEPass = response.data?.password;
-          
-            if (BEPass && BEPass === user.password) { 
-                dispatch(setStoreUser({ ...response.data }));
-            }
+        } 
+        const BEPass = response.data?.password;
+
+        if (BEPass && (BEPass === user.password)) { 
+            dispatch(setStoreUser({ ...response.data }));
+            navigate('/');
         }
     } 
     

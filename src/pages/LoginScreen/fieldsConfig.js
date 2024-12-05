@@ -11,5 +11,5 @@ export function useValidation(){
     return {
         handleValidation,
         validation
-    }
+    };
 }

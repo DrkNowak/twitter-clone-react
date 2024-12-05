@@ -29,7 +29,7 @@ function PostAddition({ newTweetId, user }: { newTweetId: string, user: User }) 
 
     return (
         <Box sx={{display: 'flex', width: '60%', flexDirection: 'column', alignItems: 'center', marginBottom: '30px'}}>
-            <TextField multiline sx={{width: '100%', marginBottom:'10px'}}
+            <TextField multiline sx={{width: '100%', marginBottom:'2px'}}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)} />
             <Button sx={{...styles.button, alignSelf: 'end'}} onClick={handleClick}>add</Button>
         </Box>

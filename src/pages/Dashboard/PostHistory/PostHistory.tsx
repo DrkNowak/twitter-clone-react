@@ -1,4 +1,6 @@
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 import UserAvatar from '../../../components/UserAvatar/UserAvatar';
 import GlobalStyles from '../../../ui-kit/GlobalStyles';
 import PostHistoryStyles from './PostHistoryStyles';
@@ -12,8 +14,8 @@ function PostHistory({tweets}: {tweets: Tweet[]}){
         <Box sx={{ ...styles.borderBox, ...styles.postWrapper }} key={tweet.id}>
              <UserAvatar user={{name: tweet.name} }/>
             <Box>
-                <p>{tweet.name}</p>
-                <p dangerouslySetInnerHTML={{__html: tweet.text}}/>
+                <Typography variant="caption" sx={{textTransform: 'capitalize'}}>{tweet.name}</Typography>
+                <Typography variant="body1" dangerouslySetInnerHTML={{__html: tweet.text}}/>
             </Box>
         </Box>).reverse();
 
