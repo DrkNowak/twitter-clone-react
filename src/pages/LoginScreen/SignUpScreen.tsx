@@ -36,7 +36,7 @@ function LoginScreen(){
      }
  
     async function handleClick() {  
-        Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User], field));
+        Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User] || '', field));
         let fetchedUser;
 
         try {
@@ -66,7 +66,7 @@ function LoginScreen(){
     
     function getIsDisabled(user: User): boolean { 
         return !Object.values(user).every(Boolean);
-    }   
+    }
 
     return (
        <Box>
@@ -107,7 +107,12 @@ function LoginScreen(){
 
             </Box>
             <Box sx={{display:'flex', justifyContent:'center'}}>
-               <Typography variant="body1">Already have an account?  <Link sx={{cursor: 'pointer', textDecoration:'none'}} onClick={toggleLogin}>Sign In</Link></Typography>
+                <Typography variant="body1">
+                    Already have an account?
+                    <Link sx={{ cursor: 'pointer', textDecoration: 'none' }} onClick={toggleLogin}>
+                        Sign In
+                    </Link>
+                </Typography>
             </Box>
         </Box>
     );
