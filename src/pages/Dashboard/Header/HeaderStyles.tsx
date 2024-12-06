@@ -19,4 +19,4 @@ const HeaderStyles = () => ({
     },
   });
 
-  export default HeaderStyles();
+  export default HeaderStyles;

@@ -13,4 +13,4 @@ const PostHistoryStyles = () => ({
     }
   });
 
-  export default PostHistoryStyles();
+  export default PostHistoryStyles;

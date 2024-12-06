@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 
 import { useDispatch } from 'react-redux';
 import { setStoreUser } from '../../store/user'; 
@@ -16,11 +17,12 @@ import { useNavigate } from 'react-router';
 
 
 function LoginScreen(){
-    const styles = GlobalStyles;
+    const styles = GlobalStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [user, setUser] = useState<User>({id: '', password: ''});
+    const [user, setUser] = useState<User>({ id: '', password: '' });
+    const [loginErrorMessage, setLoginErrorMessage] = useState('');
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>, field : string): void {
         const value = (e.target as HTMLInputElement).value;
@@ -47,9 +49,11 @@ function LoginScreen(){
         } 
         const BEPass = response.data?.password;
 
-        if (BEPass && (BEPass === user.password)) { 
+        if (BEPass && (BEPass === user.password)) {
             dispatch(setStoreUser({ ...response.data }));
             navigate('/');
+        } else {
+            setLoginErrorMessage('invalid user credentials');
         }
     } 
     
@@ -74,7 +78,8 @@ function LoginScreen(){
                     size="small" 
                     placeholder='Password' 
                     type="password" 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')}/>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')} />
+                <Typography variant="body1">{ loginErrorMessage }</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button 
                         disabled={ getIsDisabled(user) }
@@ -85,7 +90,7 @@ function LoginScreen(){
                 </Box>
             </Box>
             <Box sx={{display:'flex', justifyContent:'center'}}>
-                <p>Don't have an account? <Link sx={{cursor: 'pointer'}} onClick={toggleLogin}>Sign up</Link></p>
+                <Typography variant="body1">Don't have an account?  <Link sx={{cursor: 'pointer', textDecoration:'none'}} onClick={toggleLogin}>Sign Up!</Link></Typography>
             </Box>
         </Box>
     );

@@ -8,7 +8,7 @@ import { Tweet } from "../../../types/types";
 import { memo } from 'react';
 
 function PostHistory({tweets}: {tweets: Tweet[]}){
-    const styles = { ...GlobalStyles, ...PostHistoryStyles };
+    const styles = { ...GlobalStyles(), ...PostHistoryStyles() };
 
     const history = tweets.map(tweet => 
         <Box sx={{ ...styles.borderBox, ...styles.postWrapper }} key={tweet.id}>

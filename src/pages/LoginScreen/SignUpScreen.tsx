@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 
 import { useDispatch } from 'react-redux';
 import { setStoreUser } from '../../store/user'; 
@@ -18,7 +19,7 @@ import { useValidation,  } from './fieldsConfig';
 
 
 function LoginScreen(){
-    const styles = GlobalStyles;
+    const styles = GlobalStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { validation, handleValidation } = useValidation();
@@ -40,7 +41,7 @@ function LoginScreen(){
 
         try {
             fetchedUser = await getUser(user.id) as { data?: User };
-        } catch (e) { console.error('err', e) }
+        } catch (e) { console.error('err', e); }
         finally {
             if (fetchedUser?.data?.id) {
                 console.error('user exists');
@@ -106,7 +107,7 @@ function LoginScreen(){
 
             </Box>
             <Box sx={{display:'flex', justifyContent:'center'}}>
-               <p>Already have an account?  <Link sx={{cursor: 'pointer'}} onClick={toggleLogin}>Sign In</Link></p>
+               <Typography variant="body1">Already have an account?  <Link sx={{cursor: 'pointer', textDecoration:'none'}} onClick={toggleLogin}>Sign In</Link></Typography>
             </Box>
         </Box>
     );

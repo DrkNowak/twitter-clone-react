@@ -7,31 +7,34 @@ import { postTweet } from '../../../api/index';
 import { useState } from 'react';
 
 
+import PostAdditionStyles from './PostAdditionStyles';
 
-function PostAddition({ newTweetId, user }: { newTweetId: string, user: User }) {
-    const styles = GlobalStyles;
+
+
+function PostAddition({ newTweetId, user, setFetchTweets }: { newTweetId: string, user: User, setFetchTweets: (arg: boolean)=>void }) {
+    const styles = GlobalStyles();
+    const postAdditionStyles = PostAdditionStyles();
     const [ newTweet, setNewTweet] = useState<Tweet>();
 
     function handleClick() {
         postTweet(newTweet || {});
+        setFetchTweets(true);
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) { 
-        if (user.id && user.name) {
-            setNewTweet({
-                id: newTweetId,
-                author_id: user.id,
-                name: user.name,
-                text: e.target.value
-            });
-        }
+        setNewTweet({
+            id: newTweetId,
+            author_id: user.id || '',
+            name: user.name || '',
+            text: e.target.value.replace(/(^[ \t]*\n)/gm, "")
+        });
     }
 
     return (
-        <Box sx={{display: 'flex', width: '60%', flexDirection: 'column', alignItems: 'center', marginBottom: '30px'}}>
-            <TextField multiline sx={{width: '100%', marginBottom:'2px'}}
+        <Box sx={postAdditionStyles.box}>
+            <TextField multiline sx={postAdditionStyles.textField}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)} />
-            <Button sx={{...styles.button, alignSelf: 'end'}} onClick={handleClick}>add</Button>
+            <Button sx={{ ...styles.button, alignSelf: 'end' }} onClick={handleClick} disabled={!newTweet?.text}>add</Button>
         </Box>
     );
 }

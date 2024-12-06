@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import { memo } from 'react';
 
 const HeaderMemo = memo(function Header({ user }: { user: User }) {
-    const styles = HeaderStyles;
+    const styles = HeaderStyles();
 
     return (
         <header>
