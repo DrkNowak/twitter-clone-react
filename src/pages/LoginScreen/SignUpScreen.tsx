@@ -14,7 +14,7 @@ import { setStoreUser } from '../../store/user';
 import GlobalStyles from '../../ui-kit/GlobalStyles';
 import { User,  } from '../../types/types';
 
-import { useValidation,  } from './fieldsConfig';
+import { useValidation, getProps  } from './fieldsConfig';
 
 
 
@@ -68,34 +68,19 @@ function LoginScreen(){
         return !Object.values(user).every(Boolean);
     }
 
+
+    const fields = () => (['id', 'password', 'email', 'name'] as const).map(field => (
+        <TextField
+            {...getProps(field, validation)}
+            key={ field }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, field)}
+        />));
+
     return (
        <Box>
             <Box  sx={{...styles.borderBox, display: 'flex', flexDirection: 'column', justifyContent:'space-between', height: '300px', padding: '20px 50px'}}>
                 <h2>Sign up</h2>
-                <TextField 
-                    size="small" 
-                    placeholder='Username' 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'id')}
-                />
-                <TextField 
-                    error={!!validation.password} 
-                    helperText={validation.password} 
-                    size="small" 
-                    placeholder='Password' 
-                    type="password" 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')} />
-                <TextField 
-                    error={!!validation.email} 
-                    helperText={validation.email} 
-                    size="small"
-                    placeholder='Email' 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'email')}
-                />
-                <TextField 
-                    size="small" 
-                    placeholder='Full name' 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'name')}
-                /> 
+                {[...fields()]}
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button 
                         disabled={ getIsDisabled(user) }

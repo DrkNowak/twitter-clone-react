@@ -13,6 +13,7 @@ import { setStoreUser } from '../../store/user';
 import GlobalStyles from '../../ui-kit/GlobalStyles';
 import { User } from '../../types/types';
 import { useNavigate } from 'react-router';
+import { getProps  } from './fieldsConfig';
 
 
 
@@ -70,15 +71,13 @@ function LoginScreen(){
             <Box  sx={{...styles.borderBox, display: 'flex', flexDirection: 'column', justifyContent:'space-between', height:'200px', padding: '20px 50px'}}>
                 <h2>Log In</h2>
                 <TextField 
-                    size="small" 
-                    placeholder='Username' 
+                    {...getProps('id')}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'id')}
                 />
                 <TextField 
-                    size="small" 
-                    placeholder='Password' 
-                    type="password" 
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')} />
+                    {...getProps('password')}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')}
+                />
                 <Typography variant="body1">{ loginErrorMessage }</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button 

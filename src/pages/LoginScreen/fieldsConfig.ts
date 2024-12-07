@@ -19,13 +19,31 @@ const baseConfig = {
     id: {
         size: 'small',
         placeholder: 'UserName'
-    }
-} as const;
-    
-const getProps = (type: keyof typeof baseConfig) => {
-    if (baseConfig[type]) {
-        return baseConfig[type];
+    },
+    password: {
+        size: 'small',
+        placeholder: 'Password',
+        type: 'password'
+    },
+    email: {
+        size: 'small',
+        placeholder: 'Email' 
+    },
+    name: {
+        size: 'small', 
+        placeholder:'Full name' 
     }
 
-    return { size: 'small', placeholder: '' };
+} as const;
+    
+export const getProps = (type: keyof typeof baseConfig, validation = { [type]: '' }): { size: 'small', placeholder: string, error: boolean, helperText: string } => {
+    if (baseConfig[type]) {
+        return {
+            ...baseConfig[type],
+            error: !!validation[type],
+            helperText: validation[type]
+        };
+    }
+
+    return { size: 'small', placeholder: '', error: false, helperText: ''  };
 };
