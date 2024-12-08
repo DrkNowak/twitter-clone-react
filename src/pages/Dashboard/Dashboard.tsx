@@ -27,8 +27,10 @@ function Dashboard() {
     useEffect(() => {
       const fetchTweets = async () => {
         const { data } = await getTweets();
+        
         setTweets(data);
       };
+
       if (shouldFetchTweets) {
         fetchTweets();
         setFetchTweets(false);
