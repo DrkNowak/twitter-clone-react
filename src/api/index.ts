@@ -19,7 +19,12 @@ export async function register(data: object){
     return axios.post(`${baseUrl}${endpoints.users}`, data);
 }
 
-export async function postTweet(data: object){
+export async function postTweet(data: object) {
+    return axios.post(`${baseUrl}${endpoints.tweets}`, data);
+}
+
+export async function updateRating(data: object) {
+    // due to json server limitation i update it with the whole object instead of just id + rating 
     return axios.post(`${baseUrl}${endpoints.tweets}`, data);
 }
 

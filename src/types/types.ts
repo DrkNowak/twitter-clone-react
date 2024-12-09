@@ -14,4 +14,13 @@ export type ValidationRulesTypes = {
     id: StringFunction
 }
 
-export type Tweet = { author_id: string, id: string, text: string, name: string}
+export type Rating = { up: number, down: number };
+
+export type Tweet = {
+    author_id: string,
+    id: string,
+    text: string,
+    name: string,
+    rating: Rating,
+}
+

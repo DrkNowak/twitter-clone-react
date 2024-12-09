@@ -26,7 +26,8 @@ function PostAddition({ newTweetId, user, setFetchTweets }: { newTweetId: string
             id: newTweetId,
             author_id: user.id || '',
             name: user.name || '',
-            text: e.target.value.replace(/(^[ \t]*\n)/gm, "")
+            text: e.target.value.replace(/(^[ \t]*\n)/gm, ""),
+            rating: {up: 0, down: 0}
         });
     }
 
