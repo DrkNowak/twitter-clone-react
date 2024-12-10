@@ -71,9 +71,8 @@ function LoginScreen(){
 
     const fields = () => (['id', 'password', 'email', 'name'] as const).map(field => (
         <TextField
-            {...getProps(field, validation)}
+            {...getProps(field, handleChange, validation)}
             key={ field }
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, field)}
         />));
 
     return (

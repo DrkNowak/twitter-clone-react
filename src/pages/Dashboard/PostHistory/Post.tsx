@@ -18,7 +18,7 @@ function Post({ post }: { post: Tweet }) {
             <Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="caption" sx={{ textTransform: 'capitalize' }}>{post.name}</Typography>
-                    <PostRating postRating={post.rating} />
+                    <PostRating post={post} />
                 </Box>
                 <Typography variant="body1" dangerouslySetInnerHTML={{ __html: post.text }} />
             </Box>

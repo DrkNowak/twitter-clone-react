@@ -71,12 +71,10 @@ function LoginScreen(){
             <Box  sx={{...styles.borderBox, display: 'flex', flexDirection: 'column', justifyContent:'space-between', height:'200px', padding: '20px 50px'}}>
                 <h2>Log In</h2>
                 <TextField 
-                    {...getProps('id')}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'id')}
+                    {...getProps('id', handleChange)}
                 />
                 <TextField 
-                    {...getProps('password')}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, 'password')}
+                    {...getProps('password', handleChange)}
                 />
                 <Typography variant="body1">{ loginErrorMessage }</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

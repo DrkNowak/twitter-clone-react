@@ -15,6 +15,8 @@ export function useValidation(){
     };
 }
 
+
+
 const baseConfig = {
     id: {
         size: 'small',
@@ -35,15 +37,29 @@ const baseConfig = {
     }
 
 } as const;
-    
-export const getProps = (type: keyof typeof baseConfig, validation = { [type]: '' }): { size: 'small', placeholder: string, error: boolean, helperText: string } => {
-    if (baseConfig[type]) {
-        return {
-            ...baseConfig[type],
-            error: !!validation[type],
-            helperText: validation[type]
-        };
-    }
 
-    return { size: 'small', placeholder: '', error: false, helperText: ''  };
+
+    
+export const getProps = (
+    type: keyof typeof baseConfig,
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void,
+    validation = { [type]: '' },
+    ):
+    {
+        size: 'small',
+        placeholder: string,
+        error: boolean,
+        helperText: string,
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    } => {
+        if (baseConfig[type]) {
+            return {
+                ...baseConfig[type],
+                error: !!validation[type],
+                helperText: validation[type],
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, type)
+            };
+        }
+
+    return { size: 'small', placeholder: '', error: false, helperText: '',  onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, '')  };
 };
