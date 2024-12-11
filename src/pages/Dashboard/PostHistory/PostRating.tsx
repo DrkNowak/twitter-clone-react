@@ -9,16 +9,23 @@ import { Tweet } from "../../../types/types";
 import { updateRating } from '../../../api/index';
 
 function PostRating({ post }: { post: Tweet }) {
-    const getRating = () => post.rating.up - post.rating.down;
+    const getRating = () => post.rating.up.length - post.rating.down.length;
 
     const changeRank = async (operation: 'up' | 'down') => {
-        const postRat = post.rating;
-        
-        if (operation === 'up') {
-            await updateRating({ ...post, rating: { ...postRat, up: ++postRat.up } });
+        const postRatUp = post.rating.up;
+        const postRatDown = post.rating.down;
+        const rating = post.rating;
+
+        const user = 'temp';
+        const hasUserVoted = [...postRatUp, ...postRatDown].includes(user);
+
+        if (hasUserVoted) {
+            rating[operation] = post.rating[operation].filter(voter => voter !== user);
         } else {
-            await updateRating({ ...post, rating: { ...postRat, down: ++postRat.down } });
-         }
+            rating[operation].push(user);
+        }
+
+        await updateRating({ ...post, rating });
     };
 
     return (
