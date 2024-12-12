@@ -14,15 +14,23 @@ import AppStyles from './AppStyles';
 import { getTweets } from '../../api'; 
 import { Tweet } from "../../types/types";
 
+import { useDispatch } from 'react-redux';
+
+import { setShouldFetchTweets } from '../../store/user/'; 
+
 function Dashboard() {
-    const styles = AppStyles();
+  const styles = AppStyles();
+  const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => {
       return state.user.user;
-    });
+  });
+  
+  const shouldFetchTweets = useSelector((state: RootState) => {
+    return state.user.shouldFetchTweets;
+  });
   
   const [tweets, setTweets] = useState<Tweet[]>([]);
-  const [shouldFetchTweets, setFetchTweets] =  useState(true);
 
     useEffect(() => {
       const fetchTweets = async () => {
@@ -33,7 +41,8 @@ function Dashboard() {
 
       if (shouldFetchTweets) {
         fetchTweets();
-        setFetchTweets(false);
+        // setFetchTweets(false);
+        dispatch(setShouldFetchTweets(false));
       }
     }, [user, shouldFetchTweets]);
 
@@ -41,7 +50,7 @@ function Dashboard() {
     <Box className="App" sx={styles.appWrapper}>
       <Header user={user} />
       <Fragment>
-        <PostAddition newTweetId={String(tweets.length + 1)} user={user} setFetchTweets={setFetchTweets} />
+        <PostAddition newTweetId={String(tweets.length + 1)} user={user} />
         <PostHistory tweets={tweets} />
       </Fragment>
     </Box>

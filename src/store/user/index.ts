@@ -4,6 +4,7 @@ import { User } from '../../types/types';
 
 export interface UserSliceState {
   user: User,
+  shouldFetchTweets: boolean,
 }
 
 const initialState: UserSliceState = {
@@ -12,7 +13,8 @@ const initialState: UserSliceState = {
     name: '',
     email: '',
     password: '',
-  }
+  },
+  shouldFetchTweets: true
 };
 
 export const userSlice = createSlice({
@@ -21,12 +23,14 @@ export const userSlice = createSlice({
   reducers: {
     setStoreUser: (initialState: UserSliceState, action : PayloadAction<User>) : void => {
       initialState.user = {...initialState.user, ...action.payload}; 
-      },
-    // setId: (initialState: UserState, action : PayloadAction<string>) : void => { initialState.id = action.payload },
+    },
+    setShouldFetchTweets: (initialState: UserSliceState, action: PayloadAction<boolean>): void => {
+      initialState.shouldFetchTweets = action.payload; 
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setStoreUser } = userSlice.actions;
+export const { setStoreUser, setShouldFetchTweets } = userSlice.actions;
 
 export default userSlice.reducer;
