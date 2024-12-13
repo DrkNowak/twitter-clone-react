@@ -8,7 +8,13 @@ import { Tweet } from "../../../types/types";
 
 import { updateRating } from '../../../api/index';
 
+import { useDispatch } from 'react-redux';
+
+import { setShouldFetchTweets } from '../../../store/user/'; 
+
 function PostRating({ post }: { post: Tweet }) {
+    const dispatch = useDispatch();
+
     const getRating = () => post.rating.up.length - post.rating.down.length;
 
     const changeRank = async (operation: 'up' | 'down') => {
@@ -26,6 +32,7 @@ function PostRating({ post }: { post: Tweet }) {
         }
 
         await updateRating({ ...post, rating });
+        dispatch(setShouldFetchTweets(true));
     };
 
     return (

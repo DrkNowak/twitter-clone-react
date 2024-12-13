@@ -24,7 +24,8 @@ export async function postTweet(data: object) {
 }
 
 export async function updateRating(data: object) {
-    // due to json server limitation i update it with the whole object instead of just id + rating 
-    return axios.post(`${baseUrl}${endpoints.tweets}`, data);
+    // due to json server limitation i update it with the whole object instead of just id + rating
+    // return axios.delete(`${baseUrl}${endpoints.tweets}`, data);
+    console.log(data)
 }
 

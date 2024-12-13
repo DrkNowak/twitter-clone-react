@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types/types';
+import { Tweet } from "../../types/types";
 
 export interface UserSliceState {
   user: User,
   shouldFetchTweets: boolean,
+  tweets: Tweet[]
 }
 
 const initialState: UserSliceState = {
@@ -14,7 +16,8 @@ const initialState: UserSliceState = {
     email: '',
     password: '',
   },
-  shouldFetchTweets: true
+  shouldFetchTweets: true,
+  tweets: []
 };
 
 export const userSlice = createSlice({
@@ -27,10 +30,13 @@ export const userSlice = createSlice({
     setShouldFetchTweets: (initialState: UserSliceState, action: PayloadAction<boolean>): void => {
       initialState.shouldFetchTweets = action.payload; 
     },
+    setStoreTweets: (initialState: UserSliceState, action: PayloadAction<Tweet[]>): void => {
+      initialState.tweets = action.payload; 
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setStoreUser, setShouldFetchTweets } = userSlice.actions;
+export const { setStoreUser, setShouldFetchTweets, setStoreTweets } = userSlice.actions;
 
 export default userSlice.reducer;

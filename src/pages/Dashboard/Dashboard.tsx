@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -12,11 +12,10 @@ import { Fragment } from "react";
 import Box from '@mui/material/Box';
 import AppStyles from './AppStyles';
 import { getTweets } from '../../api'; 
-import { Tweet } from "../../types/types";
 
 import { useDispatch } from 'react-redux';
 
-import { setShouldFetchTweets } from '../../store/user/'; 
+import { setShouldFetchTweets, setStoreTweets } from '../../store/user/'; 
 
 function Dashboard() {
   const styles = AppStyles();
@@ -29,14 +28,16 @@ function Dashboard() {
   const shouldFetchTweets = useSelector((state: RootState) => {
     return state.user.shouldFetchTweets;
   });
-  
-  const [tweets, setTweets] = useState<Tweet[]>([]);
 
+  const tweets = useSelector((state: RootState) => {
+    return state.user.tweets;
+  });
+  
     useEffect(() => {
       const fetchTweets = async () => {
         const { data } = await getTweets();
-        
-        setTweets(data);
+
+        dispatch(setStoreTweets(data));
       };
 
       if (shouldFetchTweets) {
