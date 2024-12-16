@@ -4,11 +4,13 @@ import { deepPurple } from '@mui/material/colors';
 
 import { useNavigate } from 'react-router';
 
-function UserMenu({ user }: { user: User }) {
+function UserAvatar({ user }: { user: User }) {
     
     const navigate = useNavigate();
     
-    function handleClick() { navigate('/userProfile'); };
+    function handleClick() {
+        navigate(`/userProfile/?id=${user.id}`);
+    };
     
     return (
         <Avatar sx={{ bgcolor: deepPurple[300] }} onClick={handleClick}>{user.name && getUserInitials(user.name)}</Avatar>
@@ -22,4 +24,4 @@ function getUserInitials( name : string ): string{
 }
 
 
-export default UserMenu;
+export default UserAvatar;

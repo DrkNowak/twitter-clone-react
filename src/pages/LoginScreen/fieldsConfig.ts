@@ -39,10 +39,11 @@ const baseConfig = {
 } as const;
 
 
+type EventType = React.ChangeEvent<HTMLInputElement>;
     
 export const getProps = (
     type: keyof typeof baseConfig,
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void,
+    handleChange: (e: EventType, name: string) => void,
     validation = { [type]: '' },
     ):
     {
@@ -50,16 +51,16 @@ export const getProps = (
         placeholder: string,
         error: boolean,
         helperText: string,
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+        onChange: (e: EventType) => void
     } => {
         if (baseConfig[type]) {
             return {
                 ...baseConfig[type],
                 error: !!validation[type],
                 helperText: validation[type],
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, type)
+                onChange: (e: EventType) => handleChange(e, type)
             };
         }
 
-    return { size: 'small', placeholder: '', error: false, helperText: '',  onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, '')  };
+    return { size: 'small', placeholder: '', error: false, helperText: '',  onChange: (e: EventType) => handleChange(e, '')  };
 };

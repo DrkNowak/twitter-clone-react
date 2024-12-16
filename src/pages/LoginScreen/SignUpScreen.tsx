@@ -37,9 +37,11 @@ function LoginScreen(){
  
     async function handleClick() {  
         Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User] || '', field));
+
         let fetchedUser;
 
         try {
+            //it throws an error if user is not in data base to improve
             fetchedUser = await getUser(user.id) as { data?: User };
         } catch (e) { console.error('err', e); }
         finally {

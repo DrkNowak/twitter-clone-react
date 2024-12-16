@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import LoginScreen from '../LoginScreen/LoginScreen';
 import SignUpScreen from '../LoginScreen/SignUpScreen';
 import Dashboard from "../Dashboard/Dashboard";
-import UserProfile from '../../pages/UserProfile/userProfile';
-
+import UserProfile from '../UserProfile/UserProfile';
+ 
 import { RootState } from '../../store';
 
 import {
@@ -32,7 +32,7 @@ function AppWrapper() {
       element: <><SignUpScreen /></>,
     },
     {
-      path: '/userProfile',
+      path: '/userProfile/',
       element: <><UserProfile /></>,
     }
   ]);

@@ -42,7 +42,6 @@ function Dashboard() {
 
       if (shouldFetchTweets) {
         fetchTweets();
-        // setFetchTweets(false);
         dispatch(setShouldFetchTweets(false));
       }
     }, [user, shouldFetchTweets]);

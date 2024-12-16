@@ -1,26 +1,33 @@
 import { useSelector } from 'react-redux';
+import { useSearchParams } from "react-router-dom";
+
 import Box from '@mui/material/Box';
 import AppStyles from '../Dashboard/AppStyles';
 
 import { RootState } from '../../store';
 import PostHistory from '../Dashboard/PostHistory/PostHistory';
 
+import ArrowLeftRounded from '@mui/icons-material/ArrowBack';
+
+import { useNavigate } from 'react-router';
+
 function UserProfile() {
   const styles = AppStyles();
-
-  const user = useSelector((state: RootState) => {
-    return state.user.user;
-  });
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const tweets = useSelector((state: RootState) => {
-    const allTweets = state.user.tweets;
-
-    return allTweets.filter(({ author_id }) => author_id === user.id);
+    return state.user.tweets;
   });
+
+  function handleClick() {  
+    navigate(`/`);
+  };
 
   return (
     <Box sx={styles.appWrapper}>
-      <PostHistory tweets={tweets} />
+      <ArrowLeftRounded sx={{position:'fixed', left: '100px', top: '10px', width:'50px', height: '50px', backgroundColor:'grey', borderRadius:'20px', color:'white'}} onClick={handleClick} />
+      <PostHistory tweets={ tweets.filter(({ author_id }) => author_id === searchParams.get('id'))} />
     </Box>
     );
   }

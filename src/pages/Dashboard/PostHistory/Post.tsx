@@ -14,7 +14,7 @@ function Post({ post }: { post: Tweet }) {
 
     return (
         <Box sx={{ ...styles.borderBox, ...styles.postWrapper }} key={post.id}>
-                <UserAvatar user={{ name: post.name }} />
+                <UserAvatar user={{ name: post.name, id: post.author_id }} />
             <Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="caption" sx={{ textTransform: 'capitalize' }}>{post.name}</Typography>
