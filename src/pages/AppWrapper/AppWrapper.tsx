@@ -39,7 +39,7 @@ function AppWrapper() {
 
   return (
     <Box sx={{
-     display: 'flex', justifyContent: 'center', marginTop: '20px'
+     display: 'flex', justifyContent: 'center', marginTop: '20px', minWidth:'860px'
     }}>
         <RouterProvider router={router} />
     </Box>

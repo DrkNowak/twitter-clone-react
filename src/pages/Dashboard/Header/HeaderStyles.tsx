@@ -4,7 +4,7 @@ const HeaderStyles = () => ({
         justifyContent: 'space-between',
         padding: '0 10px',
         alignItems: 'center',
-        width: '60vw',
+        width: '600px',
         backgroundColor: '#AAA', 
         borderRadius: '10px',
         boxShadow: '2px 5px 5px #BBB',
