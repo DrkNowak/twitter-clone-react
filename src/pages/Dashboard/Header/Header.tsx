@@ -9,7 +9,7 @@ import { memo } from 'react';
 
 const HeaderMemo = memo(function Header({ user }: { user: User }) {
     const styles = HeaderStyles();
-
+    
     return (
         <header>
             <Box sx={styles.header}>

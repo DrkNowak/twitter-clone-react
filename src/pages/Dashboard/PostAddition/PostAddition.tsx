@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 
 import { setShouldFetchTweets } from '../../../store/user/'; 
 
-function PostAddition({ newTweetId, user }: { newTweetId: string, user: User }) {
+function PostAddition({ user }: { newTweetId: string, user: User }) {
     const styles = GlobalStyles();
     const postAdditionStyles = PostAdditionStyles();
 
@@ -26,9 +26,11 @@ function PostAddition({ newTweetId, user }: { newTweetId: string, user: User }) 
         handleChange('');
     }
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement> | string) { 
+    function handleChange(e: React.ChangeEvent<HTMLInputElement> | string) {
+        const dumbId = () => String(Math.floor(Math.random() * 10));
+
         setNewTweet({
-            id: newTweetId + new Date(),
+            id: Array(10).fill('').reduce(acc => acc += dumbId()),
             author_id: user.id || '',
             name: user.name || '',
             text: typeof e !== 'string' ? e.target.value.replace(/(^[ \t]*\n)/gm, "") : e,
