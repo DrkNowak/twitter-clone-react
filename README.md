@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+To run this project run json-server on port 3000, and app on 3001(if you don't like it just change a port src/api/index.ts)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
