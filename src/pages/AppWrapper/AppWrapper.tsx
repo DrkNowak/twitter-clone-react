@@ -21,19 +21,19 @@ function AppWrapper() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: user.id ? <><Dashboard /></> : <><LoginScreen /></>,
+      element: user.id ? <Dashboard /> : <LoginScreen />,
     },
     {
       path: "/logIn",
-      element: <><LoginScreen /></>,
+      element: <LoginScreen />,
     },
     {
       path: "/signUp",
-      element: <><SignUpScreen /></>,
+      element: <SignUpScreen />,
     },
     {
       path: '/userProfile/',
-      element: <><UserProfile /></>,
+      element: <UserProfile />,
     }
   ]);
 
