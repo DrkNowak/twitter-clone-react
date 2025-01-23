@@ -15,11 +15,9 @@ import { setShouldFetchTweets } from '../../../store/user/';
 function PostRating({ post }: { post: Tweet }) {
   const dispatch = useDispatch();
 
-  const currentUser = useSelector((state: RootState) => {
-    return state.user.user;
-  });
+  const currentUser = useSelector((state: RootState) => state.user.user);
 
-  const getRating = () => post.rating.up.length - post.rating.down.length;
+  const rating = post.rating.up.length - post.rating.down.length;
 
   const changeRank = async (operation: 'up' | 'down') => {
     const postRatUp = post.rating.up;
@@ -44,9 +42,8 @@ function PostRating({ post }: { post: Tweet }) {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '76px' }}>
-      <Typography variant="body1" sx={{ color: getRating() >= 0 ? 'green' : 'red', width: '20px' }}>
-        {' '}
-        {getRating()}{' '}
+      <Typography variant="body1" sx={{ color: rating >= 0 ? 'green' : 'red', width: '20px' }}>
+        {rating}
       </Typography>
       <ThumbUp onClick={() => changeRank('up')} />
       <ThumbDown onClick={() => changeRank('down')} />

@@ -23,7 +23,7 @@ function LoginScreen() {
   const [user, setUser] = useState<User>({ id: '', password: '' });
   const [loginErrorMessage, setLoginErrorMessage] = useState('');
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>, field: string): void {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>, field: string) {
     const value = (e.target as HTMLInputElement).value;
 
     setUser({ ...user, [field]: value });

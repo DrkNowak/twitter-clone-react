@@ -16,9 +16,7 @@ function UserProfile() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const tweets = useSelector((state: RootState) => {
-    return state.user.tweets;
-  });
+  const tweets = useSelector((state: RootState) => state.user.tweets);
 
   function handleClick() {
     navigate(`/`);

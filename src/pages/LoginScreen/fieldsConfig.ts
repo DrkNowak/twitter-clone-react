@@ -37,17 +37,19 @@ const baseConfig = {
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
 
-export const getProps = (
-  type: keyof typeof baseConfig,
-  handleChange: (e: EventType, name: string) => void,
-  validation = { [type]: '' }
-): {
+type props = {
   size: 'small';
   placeholder: string;
   error: boolean;
   helperText: string;
   onChange: (e: EventType) => void;
-} => {
+};
+
+export const getProps = (
+  type: keyof typeof baseConfig,
+  handleChange: (e: EventType, name: string) => void,
+  validation = { [type]: '' }
+): props => {
   if (baseConfig[type]) {
     return {
       ...baseConfig[type],

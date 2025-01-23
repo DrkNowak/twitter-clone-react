@@ -29,7 +29,7 @@ function LoginScreen() {
     password: '',
   });
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>, field: string): void {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>, field: string) {
     const value = (e.target as HTMLInputElement).value;
 
     handleValidation(value, field);
@@ -38,7 +38,7 @@ function LoginScreen() {
   }
 
   async function handleClick() {
-    Object.keys(user).forEach((field: string): void => handleValidation(user[field as keyof User] || '', field));
+    Object.keys(user).forEach((field: string) => handleValidation(user[field as keyof User] || '', field));
 
     let fetchedUser;
 
@@ -67,7 +67,7 @@ function LoginScreen() {
     navigate('/');
   }
 
-  function toggleLogin(): void {
+  function toggleLogin() {
     navigate('/logIn');
   }
 

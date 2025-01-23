@@ -24,13 +24,13 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setStoreUser: (initialState: UserSliceState, action: PayloadAction<User>): void => {
+    setStoreUser: (initialState: UserSliceState, action: PayloadAction<User>) => {
       initialState.user = { ...initialState.user, ...action.payload };
     },
-    setShouldFetchTweets: (initialState: UserSliceState, action: PayloadAction<boolean>): void => {
+    setShouldFetchTweets: (initialState: UserSliceState, action: PayloadAction<boolean>) => {
       initialState.shouldFetchTweets = action.payload;
     },
-    setStoreTweets: (initialState: UserSliceState, action: PayloadAction<Tweet[]>): void => {
+    setStoreTweets: (initialState: UserSliceState, action: PayloadAction<Tweet[]>) => {
       initialState.tweets = action.payload;
     },
   },
