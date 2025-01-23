@@ -6,7 +6,7 @@ import AppWrapper from './pages/AppWrapper/AppWrapper';
 function App() {
   return (
     <Provider store={store}>
-      <AppWrapper/>
+      <AppWrapper />
     </Provider>
   );
 }

@@ -10,43 +10,49 @@ import PostAdditionStyles from './PostAdditionStyles';
 
 import { useDispatch } from 'react-redux';
 
-import { setShouldFetchTweets } from '../../../store/user/'; 
+import { setShouldFetchTweets } from '../../../store/user/';
 
-function PostAddition({ user }: { newTweetId: string, user: User }) {
-    const styles = GlobalStyles();
-    const postAdditionStyles = PostAdditionStyles();
+function PostAddition({ user }: { newTweetId: string; user: User }) {
+  const styles = GlobalStyles();
+  const postAdditionStyles = PostAdditionStyles();
 
-    const [ newTweet, setNewTweet] = useState<Tweet>();
+  const [newTweet, setNewTweet] = useState<Tweet>();
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    function handleClick() {
-        postTweet(newTweet || {});
-        dispatch(setShouldFetchTweets(true));
-        handleChange('');
-    }
+  function handleClick() {
+    postTweet(newTweet || {});
+    dispatch(setShouldFetchTweets(true));
+    handleChange('');
+  }
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement> | string) {
-        const dumbId = () => String(Math.floor(Math.random() * 10));
+  function handleChange(e: React.ChangeEvent<HTMLInputElement> | string) {
+    const dumbId = () => String(Math.floor(Math.random() * 10));
 
-        setNewTweet({
-            id: Array(10).fill('').reduce(acc => acc += dumbId()),
-            author_id: user.id || '',
-            name: user.name || '',
-            text: typeof e !== 'string' ? e.target.value.replace(/(^[ \t]*\n)/gm, "") : e,
-            rating: {up: [], down: []}
-        });
-    }
+    setNewTweet({
+      id: Array(10)
+        .fill('')
+        .reduce((acc) => (acc += dumbId())),
+      author_id: user.id || '',
+      name: user.name || '',
+      text: typeof e !== 'string' ? e.target.value.replace(/(^[ \t]*\n)/gm, '') : e,
+      rating: { up: [], down: [] },
+    });
+  }
 
-    return (
-        <Box sx={postAdditionStyles.box}>
-            <TextField multiline sx={postAdditionStyles.textField}
-                value={newTweet?.text || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)} />
-            <Button sx={{ ...styles.button, alignSelf: 'end' }} onClick={handleClick} disabled={!newTweet?.text}>add</Button>
-        </Box>
-    );
+  return (
+    <Box sx={postAdditionStyles.box}>
+      <TextField
+        multiline
+        sx={postAdditionStyles.textField}
+        value={newTweet?.text || ''}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+      />
+      <Button sx={{ ...styles.button, alignSelf: 'end' }} onClick={handleClick} disabled={!newTweet?.text}>
+        add
+      </Button>
+    </Box>
+  );
 }
-
 
 export default PostAddition;

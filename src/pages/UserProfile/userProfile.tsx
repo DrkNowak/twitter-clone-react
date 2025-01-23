@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import AppStyles from '../Dashboard/AppStyles';
@@ -20,16 +20,28 @@ function UserProfile() {
     return state.user.tweets;
   });
 
-  function handleClick() {  
+  function handleClick() {
     navigate(`/`);
-  };
+  }
 
   return (
     <Box sx={styles.appWrapper}>
-      <ArrowLeftRounded sx={{position:'fixed', left: '100px', top: '10px', width:'50px', height: '50px', backgroundColor:'grey', borderRadius:'20px', color:'white'}} onClick={handleClick} />
-      <PostHistory tweets={ tweets.filter(({ author_id }) => author_id === searchParams.get('id'))} />
+      <ArrowLeftRounded
+        sx={{
+          position: 'fixed',
+          left: '100px',
+          top: '10px',
+          width: '50px',
+          height: '50px',
+          backgroundColor: 'grey',
+          borderRadius: '20px',
+          color: 'white',
+        }}
+        onClick={handleClick}
+      />
+      <PostHistory tweets={tweets.filter(({ author_id }) => author_id === searchParams.get('id'))} />
     </Box>
-    );
-  }
-  
-  export default UserProfile;
+  );
+}
+
+export default UserProfile;

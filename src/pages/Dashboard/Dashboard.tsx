@@ -1,53 +1,40 @@
 import { useEffect } from 'react';
-
-import { useSelector } from 'react-redux';
-
-import { RootState } from '../../store';
-
-import Header from '../Dashboard/Header/Header';
-import PostHistory from '../Dashboard/PostHistory/PostHistory';
-import PostAddition from "../Dashboard/PostAddition/PostAddition";
-import { Fragment } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
+
 import AppStyles from './AppStyles';
-import { getTweets } from '../../api'; 
+import { getTweets } from '../../api';
+import Header from '../Dashboard/Header/Header';
+import PostHistory from '../Dashboard/PostHistory/PostHistory';
+import PostAddition from '../Dashboard/PostAddition/PostAddition';
+import { setShouldFetchTweets, setStoreTweets } from '../../store/user/';
 
-import { useDispatch } from 'react-redux';
-
-import { setShouldFetchTweets, setStoreTweets } from '../../store/user/'; 
+import { RootState } from '../../store';
 
 function Dashboard() {
   const styles = AppStyles();
   const dispatch = useDispatch();
 
-  const user = useSelector((state: RootState) => {
-      return state.user.user;
-  });
-  
-  const shouldFetchTweets = useSelector((state: RootState) => {
-    return state.user.shouldFetchTweets;
-  });
+  const user = useSelector((state: RootState) => state.user.user);
+  const shouldFetchTweets = useSelector((state: RootState) => state.user.shouldFetchTweets);
+  const tweets = useSelector((state: RootState) => state.user.tweets);
 
-  const tweets = useSelector((state: RootState) => {
-    return state.user.tweets;
-  });
-  
-    useEffect(() => {
-      const fetchTweets = async () => {
-        const { data } = await getTweets();
+  useEffect(() => {
+    const fetchTweets = async () => {
+      const { data } = await getTweets();
 
-        dispatch(setStoreTweets(data));
-      };
+      dispatch(setStoreTweets(data));
+    };
 
-      if (shouldFetchTweets) {
-        fetchTweets();
-        dispatch(setShouldFetchTweets(false));
-      }
-    }, [user, shouldFetchTweets]);
+    if (shouldFetchTweets) {
+      fetchTweets();
+      dispatch(setShouldFetchTweets(false));
+    }
+  }, [user, shouldFetchTweets]);
 
   return (
-    <Box className="App" sx={styles.appWrapper}>
+    <Box sx={styles.appWrapper}>
       <Header user={user} />
       <>
         <PostAddition newTweetId={String(tweets.length + 1)} user={user} />
@@ -55,9 +42,6 @@ function Dashboard() {
       </>
     </Box>
   );
-     
-    
-};
-
+}
 
 export default Dashboard;

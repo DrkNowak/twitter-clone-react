@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types/types';
-import { Tweet } from "../../types/types";
+import { Tweet } from '../../types/types';
 
 export interface UserSliceState {
-  user: User,
-  shouldFetchTweets: boolean,
-  tweets: Tweet[]
+  user: User;
+  shouldFetchTweets: boolean;
+  tweets: Tweet[];
 }
 
 const initialState: UserSliceState = {
@@ -17,21 +17,21 @@ const initialState: UserSliceState = {
     password: '',
   },
   shouldFetchTweets: true,
-  tweets: []
+  tweets: [],
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setStoreUser: (initialState: UserSliceState, action : PayloadAction<User>) : void => {
-      initialState.user = {...initialState.user, ...action.payload}; 
+    setStoreUser: (initialState: UserSliceState, action: PayloadAction<User>): void => {
+      initialState.user = { ...initialState.user, ...action.payload };
     },
     setShouldFetchTweets: (initialState: UserSliceState, action: PayloadAction<boolean>): void => {
-      initialState.shouldFetchTweets = action.payload; 
+      initialState.shouldFetchTweets = action.payload;
     },
     setStoreTweets: (initialState: UserSliceState, action: PayloadAction<Tweet[]>): void => {
-      initialState.tweets = action.payload; 
+      initialState.tweets = action.payload;
     },
   },
 });
