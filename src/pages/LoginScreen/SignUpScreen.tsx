@@ -14,7 +14,8 @@ import { setStoreUser } from '../../store/user';
 import GlobalStyles from '../../ui-kit/GlobalStyles';
 import { User } from '../../types/types';
 
-import { useValidation, getProps } from './fieldsConfig';
+import { getProps } from './fieldsConfig';
+import useValidation from './useValidation';
 
 function LoginScreen() {
   const styles = GlobalStyles();
@@ -37,7 +38,7 @@ function LoginScreen() {
     setUser({ ...user, [field]: value });
   }
 
-  async function handleClick() {
+  async function handleSignUpClick() {
     Object.keys(user).forEach((field: string) => handleValidation(user[field as keyof User] || '', field));
 
     let fetchedUser;
@@ -77,23 +78,24 @@ function LoginScreen() {
 
   const fields = ['id', 'password', 'email', 'name'] as const;
 
+  const signUpWrapperSyles = {
+    ...styles.borderBox,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '300px',
+    padding: '20px 50px',
+  };
+
   return (
     <Box>
-      <Box
-        sx={{
-          ...styles.borderBox,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '300px',
-          padding: '20px 50px',
-        }}>
+      <Box sx={signUpWrapperSyles}>
         <h2>Sign up</h2>
         {fields.map((field) => (
           <TextField {...getProps(field, handleChange, validation)} key={field} />
         ))}
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button disabled={getIsDisabled(user)} onClick={handleClick} sx={styles.button}>
+          <Button disabled={getIsDisabled(user)} onClick={handleSignUpClick} sx={styles.button}>
             Sign Up
           </Button>
         </Box>

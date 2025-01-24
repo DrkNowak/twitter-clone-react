@@ -10,7 +10,7 @@ import { RootState } from '../../store';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-function AppWrapper() {
+function RouterWrapper() {
   const user = useSelector((state: RootState) => {
     return state.user.user;
   });
@@ -34,17 +34,18 @@ function AppWrapper() {
     },
   ]);
 
+  const styles = {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '20px',
+    minWidth: '860px',
+  };
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '20px',
-        minWidth: '860px',
-      }}>
+    <Box sx={styles}>
       <RouterProvider router={router} />
     </Box>
   );
 }
 
-export default AppWrapper;
+export default RouterWrapper;

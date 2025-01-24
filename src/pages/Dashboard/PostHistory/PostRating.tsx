@@ -11,9 +11,11 @@ import { RootState } from '../../../store';
 import { updateRating } from '../../../api/index';
 
 import { setShouldFetchTweets } from '../../../store/user/';
+import PostRatingStyles from './PostRatingStyles';
 
 function PostRating({ post }: { post: Tweet }) {
   const dispatch = useDispatch();
+  const styles = PostRatingStyles();
 
   const currentUser = useSelector((state: RootState) => state.user.user);
 
@@ -40,9 +42,11 @@ function PostRating({ post }: { post: Tweet }) {
     dispatch(setShouldFetchTweets(true));
   };
 
+  const getColor = (rating: number) => ({ color: rating >= 0 ? 'green' : 'red', width: '20px' });
+
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '76px' }}>
-      <Typography variant="body1" sx={{ color: rating >= 0 ? 'green' : 'red', width: '20px' }}>
+    <Box sx={styles.wrapper}>
+      <Typography variant="body1" sx={getColor(rating)}>
         {rating}
       </Typography>
       <ThumbUp onClick={() => changeRank('up')} />

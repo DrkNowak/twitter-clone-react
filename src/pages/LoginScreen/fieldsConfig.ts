@@ -1,20 +1,3 @@
-import { getValidationErrorMessage } from './helpers';
-import { ValidationRulesTypes } from '../../types/types';
-import { useState } from 'react';
-
-export function useValidation() {
-  const [validation, setValidation] = useState({ id: '', name: '', email: '', password: '' });
-
-  function handleValidation(value: string, field: string) {
-    setValidation({ ...validation, [field]: getValidationErrorMessage[field as keyof ValidationRulesTypes](value) });
-  }
-
-  return {
-    handleValidation,
-    validation,
-  };
-}
-
 const baseConfig = {
   id: {
     size: 'small',
@@ -37,7 +20,7 @@ const baseConfig = {
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
 
-type props = {
+type Props = {
   size: 'small';
   placeholder: string;
   error: boolean;
@@ -49,7 +32,7 @@ export const getProps = (
   type: keyof typeof baseConfig,
   handleChange: (e: EventType, name: string) => void,
   validation = { [type]: '' }
-): props => {
+): Props => {
   if (baseConfig[type]) {
     return {
       ...baseConfig[type],

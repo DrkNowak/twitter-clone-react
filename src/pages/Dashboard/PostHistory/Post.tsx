@@ -1,19 +1,17 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import UserAvatar from '../../../components/UserAvatar/UserAvatar';
+import PostRating from './PostRating';
 
-import GlobalStyles from '../../../ui-kit/GlobalStyles';
 import PostHistoryStyles from './PostHistoryStyles';
 
 import { Tweet } from '../../../types/types';
 
-import PostRating from './PostRating';
-
 function Post({ post }: { post: Tweet }) {
-  const styles = { ...GlobalStyles(), ...PostHistoryStyles() };
+  const styles = PostHistoryStyles();
 
   return (
-    <Box sx={{ ...styles.borderBox, ...styles.postWrapper }} key={post.id}>
+    <Box sx={styles.postWrapper} key={post.id}>
       <UserAvatar user={{ name: post.name, id: post.author_id }} />
       <Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

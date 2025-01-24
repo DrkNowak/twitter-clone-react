@@ -1,12 +1,12 @@
 import { store } from './store';
 import { Provider } from 'react-redux';
 
-import AppWrapper from './pages/AppWrapper/AppWrapper';
+import RouterWrapper from './pages/RouterWrapper/RouterWrapper';
 
 function App() {
   return (
     <Provider store={store}>
-      <AppWrapper />
+      <RouterWrapper />
     </Provider>
   );
 }

@@ -64,17 +64,18 @@ function LoginScreen() {
     navigate('/signUp');
   }
 
+  const loginWrapperStyles = {
+    ...styles.borderBox,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '200px',
+    padding: '20px 50px',
+  };
+
   return (
     <Box>
-      <Box
-        sx={{
-          ...styles.borderBox,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '200px',
-          padding: '20px 50px',
-        }}>
+      <Box sx={loginWrapperStyles}>
         <h2>Log In</h2>
         <TextField {...getProps('id', handleChange)} />
         <TextField {...getProps('password', handleChange)} />
@@ -87,7 +88,7 @@ function LoginScreen() {
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Typography variant="body1">
-          Don't have an account?{' '}
+          Don't have an account?
           <Link sx={{ cursor: 'pointer', textDecoration: 'none' }} onClick={toggleLogin}>
             Sign Up!
           </Link>

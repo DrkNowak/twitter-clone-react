@@ -10,6 +10,8 @@ const PostHistoryStyles = () => ({
     gridTemplateColumns: '50px 1fr',
     width: '500px',
     marginBottom: '6px',
+    border: '1px solid #595959',
+    padding: '20px',
   },
 });
 

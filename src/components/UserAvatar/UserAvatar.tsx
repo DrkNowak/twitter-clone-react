@@ -19,12 +19,10 @@ function UserAvatar({ user }: { user: User }) {
 }
 
 function getUserInitials(name: string): string {
-  const initials = name
+  return name
     .split(' ')
     .map((word) => word.charAt(0))
     .join('');
-
-  return initials;
 }
 
 export default UserAvatar;
