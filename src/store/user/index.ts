@@ -39,7 +39,7 @@ export const fetchTweets = createAsyncThunk<Tweet[], void, { rejectValue: string
       const { data } = await getTweets();
 
       // to debug
-      throw new Error('smth');
+      // throw new Error('smth');
 
       return data;
     } catch (err) {
