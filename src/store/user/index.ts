@@ -1,12 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types/types';
 import { Tweet } from '../../types/types';
+import type { AxiosError } from 'axios';
 
 export interface UserSliceState {
   user: User;
   shouldFetchTweets: boolean;
   tweets: Tweet[];
+  error: string;
+  isLoading: boolean;
 }
 
 const initialState: UserSliceState = {
@@ -18,7 +21,38 @@ const initialState: UserSliceState = {
   },
   shouldFetchTweets: true,
   tweets: [],
+  error: '',
+  isLoading: false,
 };
+
+import { getTweets } from '../../api';
+
+interface ValidationErrors {
+  errorMessage: string;
+  field_errors: Record<string, string>;
+}
+
+export const fetchTweets = createAsyncThunk<Tweet[], void, { rejectValue: string }>(
+  'user/fetchTweets',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await getTweets();
+
+      // to debug
+      throw new Error('smth');
+
+      return data;
+    } catch (err) {
+      const error = err as AxiosError<ValidationErrors>;
+
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data.errorMessage);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -27,16 +61,28 @@ export const userSlice = createSlice({
     setStoreUser: (initialState: UserSliceState, action: PayloadAction<User>) => {
       initialState.user = { ...initialState.user, ...action.payload };
     },
-    setShouldFetchTweets: (initialState: UserSliceState, action: PayloadAction<boolean>) => {
-      initialState.shouldFetchTweets = action.payload;
-    },
     setStoreTweets: (initialState: UserSliceState, action: PayloadAction<Tweet[]>) => {
       initialState.tweets = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTweets.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchTweets.fulfilled, (state, action: PayloadAction<Tweet[]>) => {
+        state.tweets = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchTweets.rejected, (state, action: PayloadAction<string | undefined>) => {
+        console.log('error', action);
+        state.error = action.payload || 'Unknown error';
+        state.isLoading = false;
+      });
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { setStoreUser, setShouldFetchTweets, setStoreTweets } = userSlice.actions;
+export const { setStoreUser, setStoreTweets } = userSlice.actions;
 
 export default userSlice.reducer;

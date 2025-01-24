@@ -6,28 +6,25 @@ import ThumbUp from '@mui/icons-material/ThumbUp';
 import ThumbDown from '@mui/icons-material/ThumbDown';
 
 import { Tweet } from '../../../types/types';
-import { RootState } from '../../../store';
-
+import { RootState, AppDispatch } from '../../../store';
+import { fetchTweets } from '../../../store/user';
 import { updateRating } from '../../../api/index';
 
-import { setShouldFetchTweets } from '../../../store/user/';
 import PostRatingStyles from './PostRatingStyles';
 
 function PostRating({ post }: { post: Tweet }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const styles = PostRatingStyles();
 
   const currentUser = useSelector((state: RootState) => state.user.user);
 
-  const rating = post.rating.up.length - post.rating.down.length;
+  const postRatUp = post.rating.up;
+  const postRatDown = post.rating.down;
+  const rating = postRatUp.length - postRatDown.length;
 
   const changeRank = async (operation: 'up' | 'down') => {
-    const postRatUp = post.rating.up;
-    const postRatDown = post.rating.down;
     const rating = { up: [...postRatUp], down: [...postRatDown] };
-
     const user = currentUser.id || '';
-
     const hasUserVoted = [...postRatUp, ...postRatDown].includes(user);
 
     if (hasUserVoted) {
@@ -39,7 +36,7 @@ function PostRating({ post }: { post: Tweet }) {
 
     await updateRating({ ...post, rating });
 
-    dispatch(setShouldFetchTweets(true));
+    dispatch(fetchTweets());
   };
 
   const getColor = (rating: number) => ({ color: rating >= 0 ? 'green' : 'red', width: '20px' });

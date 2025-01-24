@@ -9,8 +9,8 @@ import { useState } from 'react';
 import PostAdditionStyles from './PostAdditionStyles';
 
 import { useDispatch } from 'react-redux';
-
-import { setShouldFetchTweets } from '../../../store/user/';
+import { fetchTweets } from '../../../store/user';
+import { AppDispatch } from '../../../store';
 
 function PostAddition({ user }: { newTweetId: string; user: User }) {
   const styles = GlobalStyles();
@@ -18,15 +18,15 @@ function PostAddition({ user }: { newTweetId: string; user: User }) {
 
   const [newTweet, setNewTweet] = useState<Tweet>();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   function handleClick() {
     postTweet(newTweet || {});
-    dispatch(setShouldFetchTweets(true));
-    handleChange('');
+    dispatch(fetchTweets());
+    handlePostChange('');
   }
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement> | string) {
+  function handlePostChange(e: React.ChangeEvent<HTMLInputElement> | string) {
     const dumbId = () => String(Math.floor(Math.random() * 10));
 
     setNewTweet({
@@ -46,7 +46,7 @@ function PostAddition({ user }: { newTweetId: string; user: User }) {
         multiline
         sx={postAdditionStyles.textField}
         value={newTweet?.text || ''}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePostChange(e)}
       />
       <Button sx={{ ...styles.button, alignSelf: 'end' }} onClick={handleClick} disabled={!newTweet?.text}>
         add
