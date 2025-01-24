@@ -14,7 +14,7 @@ export async function getUser(user: string = '') {
 }
 
 export async function getTweets() {
-  return axios.get(baseUrl + endpoints.tweets);
+  return axios.get(`${baseUrl}${endpoints.tweets}`);
 }
 
 export async function register(data: object) {
