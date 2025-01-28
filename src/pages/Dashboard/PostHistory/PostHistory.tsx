@@ -8,7 +8,9 @@ import { Tweet } from '../../../types/types';
 import { RootState } from '../../../store';
 import { Typography } from '@mui/material';
 
-function PostHistory({ tweets }: { tweets: Tweet[] }) {
+type PostHistoryProps = { tweets: Tweet[] };
+
+function PostHistory({ tweets }: PostHistoryProps) {
   const { isLoading, error } = useSelector((state: RootState) => state.user);
 
   const bluredStyle = {

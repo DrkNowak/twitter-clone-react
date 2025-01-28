@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getUser } from '../../api';
+import { apiService } from '../../api';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -30,7 +30,7 @@ function LoginScreen() {
   }
 
   async function handleClick() {
-    let response: { data?: User } = {};
+    let response: User = {};
 
     // todo check this out
     // const [error, data] = await fetch("https://api.example.com/data").json()?=;
@@ -42,14 +42,15 @@ function LoginScreen() {
     // }
 
     try {
-      response = (await getUser(user.id)) as { data?: User };
+      response = await apiService.getUser(user.id);
     } catch (e) {
       console.error('invalid user credentials', e);
     }
-    const BEPass = response.data?.password;
+
+    const BEPass = response?.password;
 
     if (BEPass && BEPass === user.password) {
-      dispatch(setStoreUser({ ...response.data }));
+      dispatch(setStoreUser({ ...response }));
       navigate('/');
     } else {
       setLoginErrorMessage('invalid user credentials');

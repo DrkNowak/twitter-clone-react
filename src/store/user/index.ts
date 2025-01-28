@@ -25,7 +25,7 @@ const initialState: UserSliceState = {
   isLoading: false,
 };
 
-import { getTweets } from '../../api';
+import { apiService } from '../../api';
 
 interface ValidationErrors {
   errorMessage: string;
@@ -36,12 +36,12 @@ export const fetchTweets = createAsyncThunk<Tweet[], void, { rejectValue: string
   'user/fetchTweets',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await getTweets();
+      const response = await apiService.getTweets();
 
       // to debug
       // throw new Error('smth');
 
-      return data;
+      return response;
     } catch (err) {
       const error = err as AxiosError<ValidationErrors>;
 

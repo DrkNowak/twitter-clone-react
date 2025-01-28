@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { register, getUser } from '../../api';
+import { apiService } from '../../api';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -45,11 +45,11 @@ function LoginScreen() {
 
     try {
       //it throws an error if user is not in data base to improve
-      fetchedUser = (await getUser(user.id)) as { data?: User };
+      fetchedUser = await apiService.getUser(user.id);
     } catch (e) {
       console.error('err', e);
     } finally {
-      if (fetchedUser?.data?.id) {
+      if (fetchedUser?.id) {
         console.error('user exists');
       } else {
         signUp(user);
@@ -59,7 +59,7 @@ function LoginScreen() {
 
   async function signUp(user: User) {
     try {
-      register(user);
+      apiService.register(user);
     } catch (e) {
       console.error(e);
     }

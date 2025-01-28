@@ -7,7 +7,9 @@ import PostHistoryStyles from './PostHistoryStyles';
 
 import { Tweet } from '../../../types/types';
 
-function Post({ post }: { post: Tweet }) {
+type PostProps = { post: Tweet };
+
+function Post({ post }: PostProps) {
   const styles = PostHistoryStyles();
 
   return (

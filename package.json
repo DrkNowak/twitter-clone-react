@@ -26,6 +26,7 @@
     "redux": "^5.0.1",
     "save-dev": "^0.0.1-security",
     "typescript": "^4.9.5",
+    "uuid": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

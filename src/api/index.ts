@@ -1,30 +1,43 @@
 import axios from 'axios';
+import { AxiosInstance } from 'axios';
 
-const baseUrl = 'http://localhost:3000/';
+import { Tweet, User } from '../types/types';
 
 const endpoints = {
   tweets: 'tweets',
   users: 'users',
 };
 
-import { Tweet } from '../types/types';
+const axiosClient: AxiosInstance = axios.create({
+  baseURL: 'http://localhost:3000/',
+});
 
-export async function getUser(user: string = '') {
-  return axios.get(`${baseUrl}${endpoints.users}/${user}`);
+class ApiService {
+  constructor(private client: AxiosInstance) {}
+
+  async getUser(user: string = ''): Promise<User> {
+    const response = await this.client.get(`${endpoints.users}/${user}`);
+
+    return response.data;
+  }
+
+  async getTweets(): Promise<Tweet[]> {
+    const response = await this.client.get(endpoints.tweets);
+
+    return response.data;
+  }
+
+  async register(data: User): Promise<void> {
+    await this.client.post(endpoints.users, data);
+  }
+
+  async postTweet(data: Tweet): Promise<void> {
+    this.client.post(endpoints.tweets, data);
+  }
+
+  async updateRating(data: Tweet): Promise<void> {
+    await this.client.patch(`${endpoints.tweets}/${data.id}`, data);
+  }
 }
 
-export async function getTweets() {
-  return axios.get(`${baseUrl}${endpoints.tweets}`);
-}
-
-export async function register(data: object) {
-  return axios.post(`${baseUrl}${endpoints.users}`, data);
-}
-
-export async function postTweet(data: object) {
-  return axios.post(`${baseUrl}${endpoints.tweets}`, data);
-}
-
-export async function updateRating(data: Tweet) {
-  return axios.patch(`${baseUrl}${endpoints.tweets}/${data.id}`, data);
-}
+export const apiService = new ApiService(axiosClient);

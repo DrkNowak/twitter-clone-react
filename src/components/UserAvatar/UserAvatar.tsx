@@ -4,7 +4,9 @@ import { deepPurple } from '@mui/material/colors';
 
 import { useNavigate } from 'react-router';
 
-function UserAvatar({ user }: { user: User }) {
+type UserAvatarProps = { user: User };
+
+function UserAvatar({ user }: UserAvatarProps) {
   const navigate = useNavigate();
 
   function handleClick() {

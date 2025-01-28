@@ -1,9 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+
 import GlobalStyles from '../../../ui-kit/GlobalStyles';
 import { User, Tweet } from '../../../types/types';
-import { postTweet } from '../../../api/index';
+import { apiService } from '../../../api/index';
 import { useState } from 'react';
 
 import PostAdditionStyles from './PostAdditionStyles';
@@ -12,30 +15,34 @@ import { useDispatch } from 'react-redux';
 import { fetchTweets } from '../../../store/user';
 import { AppDispatch } from '../../../store';
 
-function PostAddition({ user }: { newTweetId: string; user: User }) {
+type PostAdditionProps = { newTweetId: string; user: User };
+
+function PostAddition({ user }: PostAdditionProps) {
   const styles = GlobalStyles();
   const postAdditionStyles = PostAdditionStyles();
 
-  const [newTweet, setNewTweet] = useState<Tweet>();
+  const [newTweet, setNewTweet] = useState<Tweet>({
+    id: '',
+    author_id: '',
+    name: '',
+    text: '',
+    rating: { up: [], down: [] },
+  });
 
   const dispatch = useDispatch<AppDispatch>();
 
   function handleClick() {
-    postTweet(newTweet || {});
+    apiService.postTweet(newTweet);
     dispatch(fetchTweets());
     handlePostChange('');
   }
 
-  function handlePostChange(e: React.ChangeEvent<HTMLInputElement> | string) {
-    const dumbId = () => String(Math.floor(Math.random() * 10));
-
+  function handlePostChange(text: string) {
     setNewTweet({
-      id: Array(10)
-        .fill('')
-        .reduce((acc) => (acc += dumbId())),
+      id: uuidv4(),
       author_id: user.id || '',
       name: user.name || '',
-      text: typeof e !== 'string' ? e.target.value.replace(/(^[ \t]*\n)/gm, '') : e,
+      text,
       rating: { up: [], down: [] },
     });
   }
@@ -46,7 +53,7 @@ function PostAddition({ user }: { newTweetId: string; user: User }) {
         multiline
         sx={postAdditionStyles.textField}
         value={newTweet?.text || ''}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePostChange(e)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePostChange(e.target.value)}
       />
       <Button sx={{ ...styles.button, alignSelf: 'end' }} onClick={handleClick} disabled={!newTweet?.text}>
         add
